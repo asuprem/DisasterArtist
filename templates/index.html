@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src={{ url_for('static', filename='./d3.v4.min.js') }}></script>
+  <script src={{ url_for('static', filename='./topojson.v2.min.js') }}></script>
+  <script src={{ url_for('static', filename='./index.js') }}></script>
+  <script src={{ url_for('static', filename='./bootstrap.min.js') }}></script>
+  <script src={{ url_for('static', filename='./d3-tip.js') }}></script>
+
+  <link href={{ url_for('static', filename='./index.css') }} rel="stylesheet" media="screen">
+  <link href={{ url_for('static', filename='./bootstrap.min.css') }} rel="stylesheet" media="screen">
+
+
+
+</head>
+<body onload="init()">
+
+  <div id="tutorial">
+
+    <div id="welcome-text">
+      <p class="title-white">Welcome to Weather Anomalies!</p>
+      <p class="subtitle-white">We are going to teach you more about climate. Climate change is inevitable. However, climate is not "felt" like weather is. As a result, amount of action taken around climate change is low. Our visualization shows you the weather anomalies from years 1960 - 2016. Take a look and you'll see the overall changes.</p>
+
+      <p class="text-white"><b>WHAT IS A BASELINE?</b><br>
+        We use a temperature baseline to show the changes in temperature over decades-scale time. What we refer to as a baseline is a static temperature - a single value to which all temperature values will be compared. Each county gets its own baseline for each month, which we define as the average temperature of the county from 1960 to 1970.</p>
+
+        <p class="text-white"><b>WHAT IS AN ANOMALY?</b><br>
+          All our temperatures are displayed as anomalies. NOAA defines an anomaly as any deviation from the baseline, either positive of negative. This allows us to view temperature differences as minute at 1 degrees, versus trying to compare 50C to 51C between month-to-month.</p>
+          <br>
+          <input type="submit" value="GET STARTED" onclick="closeOverlay()" class="getStartedBtn">
+
+        </div>
+
+
+        <div id="input-tutorial">
+          <p class="text-white"><b>TIMELAPSE &rarr;</b><br>You can select a start and end year, as well as the month. Click play and let it run, or pause and click an interesting year on the chart below to quickly jump to that year.</p>
+          <p class="text-white"><b>&larr; COUNTIES</b><br>Click on a county to find its temperature.</p>
+        </div>
+
+        <div id="barchart-tutorial">
+          <p class="text-white"><b>BARCHART &darr;</b><br>This shows the number of counties above and below baseline for each year. There are three color gradations: light, medium, and dark red and blue. Click the year to go to that year quickly!</p>
+        </div>
+
+      </div>
+
+
+      <div class="container-fluid" id="weather" style="padding:0;">
+  <p class="title" style="padding-left:50px;">WEATHER ANOMALIES VISUALIZATION</p>
+        <div id="topbar">
+
+
+          <div id="inputStuff">
+            <p class="title">What do you want to look at?</p>
+            <p class="subtitle">Select the month and year range.</p>
+            <p class="label">MONTH</p>
+            <select id='month_input'>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+
+            <br><br><br>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="label">YEAR START</p>
+
+                <select id='year_start_input'>
+
+                </select>
+
+                <br><br><br>
+              </div>
+              <div class="col-md-6">
+                <p class="label">YEAR END</p>
+
+                <select id='year_end_input'>
+
+                </select>
+              </div>
+            </div>
+            <!-- <input id='year_start_input' type="text" name="year_start" value="1980">
+            <input id='year_end_input' type="text" name="year_end" value = "2010"> -->
+
+            <input type="submit" value="PLAY" onclick="play()" id="submitBtn" class="my-btn"/><br>
+
+
+          </div>
+
+          <div id="countyInfo">
+            <p class="title" id="countyCode"></p>
+            <p class="subtitle" id="countyTemperature"></p>
+            <input type="submit" value="BACK" onclick="goBack()" class="my-btn"><br>
+          </div>
+
+          <div id="currentTimeInfo">
+            <p class="title">Timelapse</p>
+            <p class="label">MONTH</p>
+            <p class="currentMonth" id="currentMonth"></p>
+            <p class="label">YEAR</p>
+            <p class="currentYear" id="currentYear"></p>
+            <input type="submit" value="PAUSE" onclick="pause()" id="pauseBtn" class="my-btn">
+            <input type="submit" value="START" onclick="restart()" id="restartBtn" class="my-btn">
+            <br>
+          </div>
+
+        </div>
+
+        <div id="vis" style="margin-top:50px;"></div>
+        <div id="barchart">
+          <p class="title" style="padding-left:50px;">AGGREGATE YEAR VISUALIZATION</p>
+        </div>
+
+      </div>
+
+    </body>
+    </html>
