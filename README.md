@@ -4,7 +4,7 @@
 Flask, numpy
 
 #### Barebones running
-For a barebones running, we will use the server bundled with Flask. Note that for production, a uWSGI server, preferably with nGinx proxy is useful. Production implementation is not covered here.
+For a barebones running, we will use the server bundled with Flask. Note that for production, a uWSGI server, preferably with a configured nginx proxy is useful. Production implementation is not covered here.
 
 Ensure Flask and numpy are setup within the appropriate virtual environment (recommended to prevent global python pollution). 
 
